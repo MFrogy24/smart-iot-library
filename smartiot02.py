@@ -4,7 +4,7 @@ import torchaudio
 
 def version():
   '''Shows Smart IoT library version'''
-  print('Smart Iot Library ver. 1.0')
+  print('Smart Iot Library ver. 1.1')
 
 def load_audio(url, fname):
   '''Regresa la señal de audio, sample-rate- metada, bytes-size'''
