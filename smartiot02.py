@@ -7,7 +7,7 @@ from IPython.display import Audio, display
 
 def version():
   '''Shows Smart IoT library version'''
-  print('Smart Iot Library ver. 1.3')
+  print('Smart Iot Library ver. 1.3.1')
   print('torchaudio ver.' torchaudio.__version__)
 
 def load_audio(url, fname):
@@ -45,16 +45,18 @@ def plot_wave(wave, torch=True):
   plt.plot(wave[0].numpy() if torch else wave)  
   
 def play_audio(wave, sample_rate, torch=True):
+  '''Reproducir señal de audi'''
   if torch:
     wave = wave.numpy()
     num_channels, num_frames = wave.shape
-  else: 
+    if num_channels == 1:
+      display(Audio(wave[0], rate=sample_rate))
+    elif num_channels == 2:
+      display(Audio((wave[0], wave[1]), rate=sample_rate))
+    else: 
+      raise ValueError("Forma de la señal no soport mas de 2 canales")  
+  else: # array numpy
     display(Audio(wave, rate = sample_rate))
-    return
-  if num_channels == 1:
-    display(Audio(wave[0], rate=sample_rate))
-  elif num_channels == 2:
-    display(Audio((wave[0], wave[1]), rate=sample_rate))
-  else: 
-    raise ValueError("Forma de la señal no soport mas de 2 canales")
+  
+ 
   
