@@ -1,6 +1,7 @@
 # Smart IoT Library 
 import requests
 import torchaudio
+import matplotlib.pyplot as plt
 
 def version():
   '''Shows Smart IoT library version'''
