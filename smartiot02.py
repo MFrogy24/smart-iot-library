@@ -8,7 +8,7 @@ from IPython.display import Audio, display
 def version():
   '''Shows Smart IoT library version'''
   print('Smart Iot Library ver. 1.3.1')
-  print('torchaudio ver.' torchaudio.__version__)
+  print('torchaudio ver. ', torchaudio.__version__)
 
 def load_audio(url, fname):
   '''Regresa la señal de audio, sample-rate- metada, bytes-size'''
