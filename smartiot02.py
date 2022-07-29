@@ -7,8 +7,15 @@ from IPython.display import Audio, display
 
 def version():
   '''Shows Smart IoT library version'''
-  print('Smart Iot Library ver. 1.4')
+  print('Smart Iot Library ver. 1.5')
   print('torchaudio ver. ', torchaudio.__version__)
+ 
+def wave_size(wave):
+  if wave.ndim == 1:
+    channels, frames = 1, wave.shape[0]
+  else:
+    channels, frames = wave.shape
+  return wave.element_size() * channels * frames
 
 def load_audio(url, fname):
   '''Regresa la señal de audio, sample-rate- metada, bytes-size'''
@@ -52,18 +59,21 @@ def plot_fft(wave, max_freq=None):
   plt.plot(wave3,  lw=1, color='green')
   
 def play_audio(wave, sample_rate, torch=True):
-  '''Reproducir señal de audi'''
+  '''Reproducir señal de audio'''
+  channels = (1 if wave.ndim == 1 else wave.shape[0])
   if torch:
     wave = wave.numpy()
-    num_channels, num_frames = wave.shape
-    if num_channels == 1:
-      display(Audio(wave[0], rate=sample_rate))
-    elif num_channels == 2:
+    if channels == 1:
+      display(Audio(wave, rate=sample_rate))
+    elif channels == 2:
       display(Audio((wave[0], wave[1]), rate=sample_rate))
     else: 
-      raise ValueError("Forma de la señal no soport mas de 2 canales")  
-  else: # array numpy
-    display(Audio(wave, rate = sample_rate))
+      raise ValueError("Forma de la señal no soport mas de 2 canales")
+  else: #Numpy array 
+    if channels == 1:
+      display(Audio(wave, rate = sample_rate))
+    else:
+      display(Audio(wave[0],wave[1]), rate=sample_rate)
   
  
   
