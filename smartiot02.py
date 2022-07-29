@@ -7,7 +7,7 @@ from IPython.display import Audio, display
 
 def version():
   '''Shows Smart IoT library version'''
-  print('Smart Iot Library ver. 1.3.2')
+  print('Smart Iot Library ver. 1.4')
   print('torchaudio ver. ', torchaudio.__version__)
 
 def load_audio(url, fname):
@@ -43,6 +43,13 @@ def plot_wave(wave, torch=True):
   '''Graficar una señal de audio de PyTorch o NumPy'''
   plt.figure()
   plt.plot(wave[0].numpy() if torch else wave)  
+
+def plot_fft(wave, max_freq=None):
+  '''Graficar la señal transformada FFT desde 0 - max_freq range'''
+  wave2 = wave[:max_freq] if max_freq else wave 
+  wave3 = np.abs(wave2.real)
+  plt.figure()
+  plt.plot(wave3,  lw=1, color='green')
   
 def play_audio(wave, sample_rate, torch=True):
   '''Reproducir señal de audi'''
